@@ -1,23 +1,21 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState, useEffect } from 'react';
 
 function App() {
+  const [post,setPost] = useState([])
+  useEffect(
+    ()=>{fetch("https://pixabay.com/api/?key=27310553-5d677a81a33fdb5a5eb04704e&q=yellow+flowers&image_type=photo")
+    .then(res => res.json())
+    .then(data => setPost(data.hits))
+    },[])
+    
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {post.map(item => {
+        return(
+        <img key={item.id} src = {item.previewURL} alt = "bird"/>
+        )
+      })}
     </div>
   );
 }
